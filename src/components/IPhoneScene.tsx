@@ -42,7 +42,15 @@ export default function IPhoneScene() {
 
     const texLoader = new THREE.TextureLoader();
     const textures = SCREEN_TEXTURES.map((src) => {
-      const t = texLoader.load(src); t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; return t;
+      const t = texLoader.load(src);
+      t.flipY = false;
+      t.colorSpace = THREE.SRGBColorSpace;
+      // Sündürmeyi engellemek için repeat ve offset ayarı (Modelin UV'lerine göre ince ayar)
+      t.repeat.set(1, 0.92); 
+      t.offset.set(0, 0.04);
+      t.minFilter = THREE.LinearFilter;
+      t.magFilter = THREE.LinearFilter;
+      return t;
     });
 
     // Scroll state — native, no GSAP dependency
