@@ -24,6 +24,8 @@ export default function CommunitySection() {
       const steps = sectionRef.current?.querySelectorAll('.community-step');
       const chars = textRef.current?.querySelectorAll('.char');
 
+      if (!titleContainer || !desc || !stats || !steps || !chars) return;
+
       // Başlangıç durumu
       gsap.set([titleContainer, desc], { opacity: 0, y: 40 });
       gsap.set([stats, steps], { opacity: 0, x: 60 }); // Sağdan gelecekler

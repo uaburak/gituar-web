@@ -60,6 +60,8 @@ export default function FeaturesSection() {
       const cards = sectionRef.current?.querySelectorAll('.feature-card');
       const chars = textRef.current?.querySelectorAll('.char');
 
+      if (!titleContainer || !cards || !chars) return;
+
       // Başlangıç durumu
       gsap.set([titleContainer], { opacity: 0, y: 40 });
       gsap.set(cards, { opacity: 0, x: 60 }); // Kutucuklar sağdan gelecek
