@@ -80,7 +80,7 @@ export default function FeaturesSection() {
 
       tl.to(titleContainer, { opacity: 1, y: 0, duration: 1 })
         .add("textFillStart", "-=0.5")
-        .to(chars, { color: '#000000', stagger: 0.1, duration: 2 }, "textFillStart")
+        .to(chars, { color: 'var(--text-primary)', stagger: 0.1, duration: 2 }, "textFillStart")
         // Kutucuklar başlık efektiyle eş zamanlı gelmeye başlar
         .to(cards, { opacity: 1, x: 0, stagger: 1, duration: 1 }, "textFillStart");
         
@@ -91,7 +91,7 @@ export default function FeaturesSection() {
 
   const renderText = (text: string) => {
     return text.split('').map((char, index) => (
-      <span key={index} className="char text-zinc-300 transition-colors duration-75">
+      <span key={index} className="char text-[var(--text-secondary)] opacity-30 transition-colors duration-75">
         {char}
       </span>
     ));
@@ -121,13 +121,13 @@ export default function FeaturesSection() {
               <div
                 key={f.id}
                 id={`feature-${f.id}`}
-                className="feature-card relative p-5 rounded-2xl bg-zinc-50 border border-zinc-100 transition-colors duration-200 hover:bg-zinc-100/50"
+                className="feature-card relative p-5 rounded-2xl bg-[var(--card-bg)] border border-[var(--card-border)] transition-colors duration-200 hover:bg-[var(--bg-color)]"
               >
                 <div className="inline-flex p-2 rounded-xl bg-black text-white mb-4">
                   {f.icon}
                 </div>
-                <h3 className="text-[15px] font-semibold text-black mb-1.5">{f.title}</h3>
-                <p className="text-[13px] leading-[1.6] text-zinc-500">{f.description}</p>
+                <h3 className="text-[15px] font-semibold text-[var(--text-primary)] mb-1.5">{f.title}</h3>
+                <p className="text-[13px] leading-[1.6] text-[var(--text-secondary)]">{f.description}</p>
               </div>
             ))}
           </div>

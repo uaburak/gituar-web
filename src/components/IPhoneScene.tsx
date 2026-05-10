@@ -12,10 +12,11 @@ const TAU = Math.PI * 2;
 const KEYFRAMES = [
   { position: { x: -0.03, y: -1.4, z: 0   }, rotation: { x: -1.0,  y: 0,              z: 0     }, scale: 1.8 },
   { position: { x: -1.0, y: 0.0,  z: 0   }, rotation: { x: 0.0, y: TAU + 0.7,      z: 0.00 }, scale: 1.0 },
-  { position: { x: 1.0,  y: -0.0, z: 0   }, rotation: { x: 0.0,  y: TAU * 2 - 0.0, z: 0.00  }, scale: 1.0 },
-  { position: { x: 0,    y: 0.0, z: 0.5 }, rotation: { x: 0,     y: TAU * 3,         z: 0     }, scale: 1.0 },
+  { position: { x: 0.0,  y: 0.0,  z: 0   }, rotation: { x: 0.0, y: TAU * 2,         z: 0.00 }, scale: 1.0 }, // Dark Mode Section
+  { position: { x: 1.0,  y: 0.0,  z: 0   }, rotation: { x: 0.0, y: TAU * 3 - 0.7,  z: 0.00 }, scale: 1.0 }, // Community (Right)
+  { position: { x: 0,    y: 0.0,  z: 0.5 }, rotation: { x: 0,    y: TAU * 4,       z: 0     }, scale: 1.0 }, // CTA
 ];
-const SCREEN_TEXTURES = ['/hero-image.png', '/chord_search_ui.png', '/repertoire_list_ui.png', '/hero-image.png'];
+const SCREEN_TEXTURES = ['/hero-image.png', '/chord_search_ui.png', '/hero-image.png', '/repertoire_list_ui.png', '/hero-image.png'];
 const SCREEN_NODE = 'ScreenMaterial1';
 
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
@@ -39,7 +40,7 @@ export default function IPhoneScene() {
     const camera = new THREE.PerspectiveCamera(38, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(0, 0, 5);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 1.0));
+    const al = new THREE.AmbientLight(0xffffff, 1.0); scene.add(al);
     const kl = new THREE.DirectionalLight(0xffffff, 2.5); kl.position.set(3, 5, 5); scene.add(kl);
     const fl = new THREE.DirectionalLight(0x8ab4f8, 1.0); fl.position.set(-4, 2, 2); scene.add(fl);
     const rl = new THREE.DirectionalLight(0xffffff, 1.0); rl.position.set(0, -3, -5); scene.add(rl);
@@ -181,31 +182,49 @@ export default function IPhoneScene() {
         animation: gsap.fromTo(proxy, { p: 1 }, { p: 1.05, ease: 'none', onUpdate: onUpdateProxy, immediateRender: false })
       });
 
-      // 3. Features to Community (Fast transition)
+      // 3. Features to DarkMode (Fast transition)
       ScrollTrigger.create({
-        trigger: '#section-community',
+        trigger: '#section-dark-mode',
         start: 'top bottom',
         end: 'top top',
         scrub: true,
         animation: gsap.fromTo(proxy, { p: 1.05 }, { p: 2, ease: 'none', onUpdate: onUpdateProxy, immediateRender: false })
       });
 
-      // 4. Inside Community (Slow motion drift during pin)
+      // 4. Inside DarkMode (Slow motion drift)
+      ScrollTrigger.create({
+        trigger: '#section-dark-mode',
+        start: 'top top',
+        end: '+=150%',
+        scrub: true,
+        animation: gsap.fromTo(proxy, { p: 2 }, { p: 2.05, ease: 'none', onUpdate: onUpdateProxy, immediateRender: false })
+      });
+
+      // 5. DarkMode to Community (Fast transition)
+      ScrollTrigger.create({
+        trigger: '#section-community',
+        start: 'top bottom',
+        end: 'top top',
+        scrub: true,
+        animation: gsap.fromTo(proxy, { p: 2.05 }, { p: 3, ease: 'none', onUpdate: onUpdateProxy, immediateRender: false })
+      });
+
+      // 6. Inside Community (Slow motion drift)
       ScrollTrigger.create({
         trigger: '#section-community',
         start: 'top top',
         end: '+=300%',
         scrub: true,
-        animation: gsap.fromTo(proxy, { p: 2 }, { p: 2.05, ease: 'none', onUpdate: onUpdateProxy, immediateRender: false })
+        animation: gsap.fromTo(proxy, { p: 3 }, { p: 3.05, ease: 'none', onUpdate: onUpdateProxy, immediateRender: false })
       });
 
-      // 5. Community to CTA (Fast transition)
+      // 7. Community to CTA (Fast transition)
       ScrollTrigger.create({
         trigger: '#section-cta',
         start: 'top bottom',
         end: 'top top',
         scrub: true,
-        animation: gsap.fromTo(proxy, { p: 2.05 }, { p: 3, ease: 'none', onUpdate: onUpdateProxy, immediateRender: false })
+        animation: gsap.fromTo(proxy, { p: 3.05 }, { p: 4, ease: 'none', onUpdate: onUpdateProxy, immediateRender: false })
       });
 
       // Force initial update to state 0

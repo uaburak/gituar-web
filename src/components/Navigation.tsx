@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function Navigation() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center px-6 py-4 bg-white border-b border-zinc-100">
+    <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center px-6 py-4 bg-[var(--nav-bg)] border-b border-[var(--nav-border)] backdrop-blur-md">
       <div className="flex items-center justify-between max-w-[800px] w-full">
         <Link href="/" className="flex gap-3 items-center hover:opacity-80 transition-opacity">
           <div className="relative size-[36px] rounded-[9px] overflow-hidden bg-black flex items-center justify-center shrink-0">
@@ -15,8 +15,8 @@ export default function Navigation() {
             />
           </div>
           <div className="flex flex-col leading-[1.2]">
-            <span className="text-[16px] font-semibold text-black tracking-tight">Gituar</span>
-            <span className="text-[11px] text-zinc-500">Gitar Repertuarın</span>
+            <span className="text-[16px] font-semibold text-[var(--text-primary)] tracking-tight">Gituar</span>
+            <span className="text-[11px] text-[var(--text-secondary)]">Gitar Repertuarın</span>
           </div>
         </Link>
 

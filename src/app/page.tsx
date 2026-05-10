@@ -1,6 +1,7 @@
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/sections/HeroSection';
 import FeaturesSection from '@/components/sections/FeaturesSection';
+import DarkModeSection from '@/components/sections/DarkModeSection';
 import CommunitySection from '@/components/sections/CommunitySection';
 import CTASection from '@/components/sections/CTASection';
 import Footer from '@/components/Footer';
@@ -20,6 +21,7 @@ export default function Home() {
         <main>
           <HeroSection />
           <FeaturesSection />
+          <DarkModeSection />
           <CommunitySection />
           <CTASection />
         </main>

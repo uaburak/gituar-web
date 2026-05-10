@@ -44,7 +44,7 @@ export default function CommunitySection() {
 
       tl.to(titleContainer, { opacity: 1, y: 0, duration: 1 })
         .add("textFillStart", "-=0.5")
-        .to(chars, { color: '#000000', stagger: 0.1, duration: 2 }, "textFillStart")
+        .to(chars, { color: 'var(--text-primary)', stagger: 0.1, duration: 2 }, "textFillStart")
         .to(desc, { opacity: 1, y: 0, duration: 1 }, "textFillStart")
         .to(stats, { opacity: 1, x: 0, stagger: 1, duration: 1 }, "textFillStart+=0.5")
         .to(steps, { opacity: 1, x: 0, stagger: 1, duration: 1 }, "textFillStart+=1.0");
@@ -87,8 +87,8 @@ export default function CommunitySection() {
           <div className="flex gap-6 pt-2">
             {STATS.map((s) => (
               <div key={s.label} className="community-stat flex flex-col gap-0.5">
-                <span className="text-[24px] font-bold text-black tracking-tight">{s.value}</span>
-                <span className="text-[12px] text-zinc-500">{s.label}</span>
+                <span className="text-[24px] font-bold text-[var(--text-primary)] tracking-tight">{s.value}</span>
+                <span className="text-[12px] text-[var(--text-secondary)]">{s.label}</span>
               </div>
             ))}
           </div>
@@ -101,10 +101,10 @@ export default function CommunitySection() {
               { step: '3', text: 'Onaylandıktan sonra herkesle paylaşıldı!' },
             ].map((item) => (
               <div key={item.step} className="community-step flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center shrink-0">
-                  <span className="text-[11px] font-bold text-white">{item.step}</span>
+                <div className="w-6 h-6 rounded-full bg-[var(--text-primary)] flex items-center justify-center shrink-0">
+                  <span className="text-[11px] font-bold text-[var(--bg-color)]">{item.step}</span>
                 </div>
-                <span className="text-[14px] text-zinc-600">{item.text}</span>
+                <span className="text-[14px] text-[var(--text-secondary)]">{item.text}</span>
               </div>
             ))}
           </div>

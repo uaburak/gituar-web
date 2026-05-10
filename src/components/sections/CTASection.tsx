@@ -9,18 +9,18 @@ export default function CTASection() {
       <div 
         className="absolute inset-0 pointer-events-none" 
         style={{
-          background: 'linear-gradient(to bottom, transparent 0%, transparent 30%, white 55%, white 100%)'
+          background: 'linear-gradient(to bottom, transparent 0%, transparent 30%, var(--bg-color) 55%, var(--bg-color) 100%)'
         }}
       />
 
       <div className="relative z-10 w-full max-w-[800px] px-6 flex flex-col items-center text-center">
-        <h2 className="text-[42px] leading-[1.1] font-medium tracking-[-0.03em] text-black mb-6 max-w-[800px] text-balance">
+        <h2 className="text-[42px] leading-[1.1] font-medium tracking-[-0.03em] text-[var(--text-primary)] mb-6 max-w-[800px] text-balance">
           Hemen Sahneye
           <br />
           Adım At
         </h2>
 
-        <p className="text-[16px] leading-[24px] font-normal text-zinc-500 max-w-[540px] mb-10">
+        <p className="text-[16px] leading-[24px] font-normal text-[var(--text-secondary)] max-w-[540px] mb-10">
           Gituar uygulamasını indirerek akıllı cihazlarını dijital bir nota sehpasına dönüştür. İlk şarkını ekle ve sahneye hazır ol!
         </p>
 
@@ -39,7 +39,7 @@ export default function CTASection() {
             { icon: '🎸', text: 'Müzisyen dostu' },
           ].map((item) => (
             <div key={item.text} className="flex items-center gap-2">
-              <span className="text-zinc-400 text-sm">{item.text}</span>
+              <span className="text-[var(--text-secondary)] text-sm">{item.text}</span>
             </div>
           ))}
         </div>

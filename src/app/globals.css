@@ -40,12 +40,34 @@
     font-style: normal;
 }
 
+:root, html, body {
+  --bg-color: #ffffff;
+  --text-primary: #171717;
+  --text-secondary: #71717a;
+  --card-bg: #fafafa;
+  --card-border: #f4f4f5;
+  --nav-bg: rgba(255, 255, 255, 0.8);
+  --nav-border: #f4f4f5;
+  --accent-color: #0088FF;
+}
+
+:root.dark, html.dark, body.dark, .dark {
+  --bg-color: #000000 !important;
+  --text-primary: #ffffff !important;
+  --text-secondary: #a1a1aa !important;
+  --card-bg: #18181b !important;
+  --card-border: #27272a !important;
+  --nav-bg: rgba(0, 0, 0, 0.8) !important;
+  --nav-border: #27272a !important;
+}
+
 /* Beyaz arka plan — Tailwind reset'i ve dark mode'u eziyoruz */
 html,
 body {
-  background-color: #ffffff !important;
-  color: #171717;
+  background-color: var(--bg-color) !important;
+  color: var(--text-primary);
   font-family: 'Matter', Arial, Helvetica, sans-serif;
+  transition: background-color 0s, color 0s; /* Hard transition for colors */
 }
 
 /* App Store Button Styling */
