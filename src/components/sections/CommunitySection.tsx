@@ -71,14 +71,14 @@ export default function CommunitySection() {
         <div className="max-w-[400px] flex flex-col gap-6">
           <div className="community-title-container">
             <h2 ref={textRef} className="text-[36px] leading-[1.1] font-medium tracking-[-0.025em]">
-              {renderText("Müziğini")}
+              {renderText("Devasa Şarkı")}
               <br />
-              {renderText("Sahneni Genişlet")}
+              {renderText("ve Sanatçı Arşivi")}
             </h2>
           </div>
 
           <p className="community-desc text-[15px] leading-[1.6] text-zinc-500">
-            Gituar ile akorlarını düzenle, dijital repertuarını oluştur ve Popüler şarkıları saniyeler içinde keşfet. Müzik yolculuğunda ihtiyacın olan her şey tek bir platformda.
+            Genişleyen şarkı ve sanatçı havuzumuzda aradığın her şeyi bul. Topluluğun gücüyle her gün eklenen yeni şarkıları keşfet ve popüler şarkılar listesiyle trendleri yakala.
           </p>
 
           {/* Stats */}

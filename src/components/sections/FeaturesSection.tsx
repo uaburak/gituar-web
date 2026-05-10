@@ -56,13 +56,12 @@ export default function FeaturesSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const label = sectionRef.current?.querySelector('.feature-label');
       const titleContainer = sectionRef.current?.querySelector('.feature-title-container');
       const cards = sectionRef.current?.querySelectorAll('.feature-card');
       const chars = textRef.current?.querySelectorAll('.char');
 
       // Başlangıç durumu
-      gsap.set([label, titleContainer], { opacity: 0, y: 40 });
+      gsap.set([titleContainer], { opacity: 0, y: 40 });
       gsap.set(cards, { opacity: 0, x: 60 }); // Kutucuklar sağdan gelecek
 
       // Scroll timeline
@@ -77,8 +76,7 @@ export default function FeaturesSection() {
         }
       });
 
-      tl.to(label, { opacity: 1, y: 0, duration: 1 })
-        .to(titleContainer, { opacity: 1, y: 0, duration: 1 }, "-=0.5")
+      tl.to(titleContainer, { opacity: 1, y: 0, duration: 1 })
         .add("textFillStart", "-=0.5")
         .to(chars, { color: '#000000', stagger: 0.1, duration: 2 }, "textFillStart")
         // Kutucuklar başlık efektiyle eş zamanlı gelmeye başlar
@@ -107,16 +105,11 @@ export default function FeaturesSection() {
       <div className="w-full max-w-[800px] px-6">
         <div className="ml-auto max-w-[460px]">
           <div className="mb-10">
-            <div className="feature-label inline-flex items-center gap-2 bg-zinc-100 border border-zinc-200 rounded-full px-4 py-2 w-fit mb-4">
-              <span className="text-[12px] font-medium text-black tracking-wide uppercase">
-                Özellikler
-              </span>
-            </div>
             <div className="feature-title-container">
               <h2 ref={textRef} className="text-[36px] leading-[1.1] font-medium tracking-[-0.025em]">
-                {renderText("Müziğini")}
+                {renderText("Repertuvarın")}
                 <br />
-                {renderText("Sahneni Genişlet")}
+                {renderText("Kontrolün Altında")}
               </h2>
             </div>
           </div>

@@ -15,13 +15,13 @@ export default function CTASection() {
 
       <div className="relative z-10 w-full max-w-[800px] px-6 flex flex-col items-center text-center">
         <h2 className="text-[42px] leading-[1.1] font-medium tracking-[-0.03em] text-black mb-6 max-w-[800px] text-balance">
-          Müziğini
+          Hemen Sahneye
           <br />
-          Sahneni Genişlet
+          Adım At
         </h2>
 
         <p className="text-[16px] leading-[24px] font-normal text-zinc-500 max-w-[540px] mb-10">
-          Gituar ile akorlarını düzenle, dijital repertuarını oluştur ve Popüler şarkıları saniyeler içinde keşfet. Müzik yolculuğunda ihtiyacın olan her şey tek bir platformda.
+          Gituar uygulamasını indirerek akıllı cihazlarını dijital bir nota sehpasına dönüştür. İlk şarkını ekle ve sahneye hazır ol!
         </p>
 
         <a

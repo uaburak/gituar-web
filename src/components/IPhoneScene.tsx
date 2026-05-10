@@ -169,7 +169,7 @@ export default function IPhoneScene() {
         start: 'top bottom',
         end: 'top top',
         scrub: true,
-        animation: gsap.fromTo(proxy, { p: 0 }, { p: 1, ease: 'none', onUpdate: onUpdateProxy })
+        animation: gsap.fromTo(proxy, { p: 0 }, { p: 1, ease: 'none', onUpdate: onUpdateProxy, immediateRender: false })
       });
 
       // 2. Inside Features (Slow motion drift during pin)
@@ -178,7 +178,7 @@ export default function IPhoneScene() {
         start: 'top top',
         end: '+=300%',
         scrub: true,
-        animation: gsap.fromTo(proxy, { p: 1 }, { p: 1.05, ease: 'none', onUpdate: onUpdateProxy })
+        animation: gsap.fromTo(proxy, { p: 1 }, { p: 1.05, ease: 'none', onUpdate: onUpdateProxy, immediateRender: false })
       });
 
       // 3. Features to Community (Fast transition)
@@ -187,7 +187,7 @@ export default function IPhoneScene() {
         start: 'top bottom',
         end: 'top top',
         scrub: true,
-        animation: gsap.fromTo(proxy, { p: 1.05 }, { p: 2, ease: 'none', onUpdate: onUpdateProxy })
+        animation: gsap.fromTo(proxy, { p: 1.05 }, { p: 2, ease: 'none', onUpdate: onUpdateProxy, immediateRender: false })
       });
 
       // 4. Inside Community (Slow motion drift during pin)
@@ -196,7 +196,7 @@ export default function IPhoneScene() {
         start: 'top top',
         end: '+=300%',
         scrub: true,
-        animation: gsap.fromTo(proxy, { p: 2 }, { p: 2.05, ease: 'none', onUpdate: onUpdateProxy })
+        animation: gsap.fromTo(proxy, { p: 2 }, { p: 2.05, ease: 'none', onUpdate: onUpdateProxy, immediateRender: false })
       });
 
       // 5. Community to CTA (Fast transition)
@@ -205,8 +205,12 @@ export default function IPhoneScene() {
         start: 'top bottom',
         end: 'top top',
         scrub: true,
-        animation: gsap.fromTo(proxy, { p: 2.05 }, { p: 3, ease: 'none', onUpdate: onUpdateProxy })
+        animation: gsap.fromTo(proxy, { p: 2.05 }, { p: 3, ease: 'none', onUpdate: onUpdateProxy, immediateRender: false })
       });
+
+      // Force initial update to state 0
+      onUpdateProxy();
+      ScrollTrigger.refresh();
       
       // Initialize to state 0
       applyTexture(0);
