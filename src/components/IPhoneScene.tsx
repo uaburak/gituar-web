@@ -57,13 +57,20 @@ export default function IPhoneScene() {
     let phone: THREE.Object3D | null = null;
     let ox = 0, oy = 0, oz = 0;
     let screenMesh: THREE.Mesh | null = null;
-    let curTexIdx = 0;
+    let currentTexIdx = -1; // -1 yapıyoruz ki ilk 0 indeksi uygulansın
 
     function applyTexture(idx: number) {
-      if (!screenMesh || idx === curTexIdx) return;
-      curTexIdx = idx;
-      const mat = (Array.isArray(screenMesh.material) ? screenMesh.material[0] : screenMesh.material) as THREE.MeshStandardMaterial;
-      mat.map = textures[idx]; mat.emissiveMap = textures[idx]; mat.needsUpdate = true;
+      if (!screenMesh || idx === currentTexIdx) return;
+      currentTexIdx = idx;
+      console.log(`[Gituar3D] Applying texture index: ${idx}`);
+      const mat = (
+        Array.isArray(screenMesh.material) ? screenMesh.material[0] : screenMesh.material
+      ) as THREE.MeshStandardMaterial;
+      mat.map = textures[idx];
+      mat.emissiveMap = textures[idx];
+      mat.metalness = 0;
+      mat.roughness = 1;
+      mat.needsUpdate = true;
     }
 
     let rafId = 0;
@@ -117,11 +124,17 @@ export default function IPhoneScene() {
       phone.rotation.set(KEYFRAMES[0].rotation.x, KEYFRAMES[0].rotation.y, KEYFRAMES[0].rotation.z);
 
       phone.traverse((child) => {
-        if (child.name === SCREEN_NODE && (child as THREE.Mesh).isMesh) {
+        if (child.name.includes(SCREEN_NODE) && (child as THREE.Mesh).isMesh) {
           screenMesh = child as THREE.Mesh;
+          console.log('[Gituar3D] Screen node found:', child.name);
           const mat = (Array.isArray(screenMesh.material) ? screenMesh.material[0] : screenMesh.material) as THREE.MeshStandardMaterial;
-          mat.map = textures[0]; mat.emissiveMap = textures[0];
-          mat.emissive = new THREE.Color(0xffffff); mat.emissiveIntensity = 0.5; mat.needsUpdate = true;
+          mat.map = textures[0]; 
+          mat.emissiveMap = textures[0];
+          mat.emissive = new THREE.Color(0xffffff); 
+          mat.emissiveIntensity = 0.5;
+          mat.metalness = 0;
+          mat.roughness = 1;
+          mat.needsUpdate = true;
         }
       });
 
