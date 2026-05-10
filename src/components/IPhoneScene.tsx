@@ -109,7 +109,7 @@ export default function IPhoneScene() {
         // Scale lerp
         const targetScale = (2.4 / (phone as any)._baseHeight) * lerp(from.scale, to.scale, p);
         phone.scale.setScalar(targetScale);
-
+        
         applyTexture(Math.min(Math.round(smoothProgress * N), N));
       }
 

@@ -14,8 +14,7 @@ export default function Home() {
 
       {/* Scroll container — içerik katmanı */}
       <div className="relative" style={{ zIndex: 1 }}>
-        {/* ── HEADER ─────────────────────────────────────────────── */}
-        <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center px-6 py-4 bg-white/80 backdrop-blur-md border-b border-zinc-100/60">
+        <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center px-6 py-4 bg-white border-b border-zinc-100">
           <div className="flex items-center justify-between max-w-[800px] w-full">
             <div className="flex gap-3 items-center">
               <div className="relative size-[36px] rounded-[9px] overflow-hidden bg-black flex items-center justify-center shrink-0">
@@ -35,9 +34,9 @@ export default function Home() {
             <a
               href="#download"
               id="header-download-btn"
-              className="bg-black hover:bg-zinc-800 transition-all duration-200 flex h-[38px] items-center justify-center px-4 rounded-xl shadow-sm hover:shadow-md"
+              className="bg-[#0088FF] hover:bg-[#0077EE] transition-all duration-200 flex h-[40px] items-center justify-center px-[10px] rounded-full shadow-sm"
             >
-              <span className="text-[13px] font-medium text-white">Uygulamayı İndir</span>
+              <span className="text-[12px] px-4 font-medium text-white">Uygulamayı indir</span>
             </a>
           </div>
         </header>

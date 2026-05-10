@@ -101,10 +101,10 @@ export default function FeaturesSection() {
                 Özellikler
               </span>
             </div>
-            <h2 className="text-[36px] sm:text-[44px] leading-[1.1] font-bold tracking-[-0.025em] text-black">
-              Her şey
+            <h2 className="text-[36px] leading-[1.1] font-medium tracking-[-0.025em] text-black">
+              Müziğini
               <br />
-              <span className="text-violet-500">parmak ucunda.</span>
+              Sahneni Genişlet
             </h2>
           </div>
 
@@ -113,9 +113,9 @@ export default function FeaturesSection() {
               <div
                 key={f.id}
                 id={`feature-${f.id}`}
-                className={`relative p-5 rounded-2xl bg-gradient-to-br ${f.gradient} border ${f.border} backdrop-blur-sm`}
+                className="relative p-5 rounded-2xl bg-zinc-50 border border-zinc-100 transition-colors duration-200 hover:bg-zinc-100/50"
               >
-                <div className={`inline-flex p-2.5 rounded-xl ${f.iconBg} ${f.iconColor} mb-4`}>
+                <div className="inline-flex p-2 rounded-xl bg-black text-white mb-4">
                   {f.icon}
                 </div>
                 <h3 className="text-[15px] font-semibold text-black mb-1.5">{f.title}</h3>
