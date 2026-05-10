@@ -8,7 +8,7 @@ export default function Navigation() {
         <Link href="/" className="flex gap-3 items-center hover:opacity-80 transition-opacity">
           <div className="relative size-[36px] rounded-[9px] overflow-hidden bg-black flex items-center justify-center shrink-0">
             <Image
-              src="/guitar-logo.png"
+              src="/gituar-logo.png"
               alt="Gituar Logo"
               fill
               className="object-cover scale-[1.3]"
