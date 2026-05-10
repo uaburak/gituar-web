@@ -12,7 +12,7 @@ const KEYFRAMES = [
   { position: { x: 0,    y: -0.1, z: 0.5 }, rotation: { x: 0,     y: TAU * 3,         z: 0     }, scale: 1.0 },
 ];
 const SCREEN_TEXTURES = ['/hero-image.png', '/chord_search_ui.png', '/repertoire_list_ui.png', '/hero-image.png'];
-const SCREEN_NODE = 'ScreenMaterial2';
+const SCREEN_NODE = 'ScreenMaterial1';
 
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
 
@@ -68,8 +68,9 @@ export default function IPhoneScene() {
       ) as THREE.MeshStandardMaterial;
       mat.map = textures[idx];
       mat.emissiveMap = textures[idx];
-      mat.metalness = 0;
-      mat.roughness = 1;
+      mat.color.setHex(0xffffff); 
+      mat.emissive.setHex(0xffffff);
+      mat.emissiveIntensity = 0.5;
       mat.needsUpdate = true;
     }
 
@@ -126,14 +127,20 @@ export default function IPhoneScene() {
       phone.traverse((child) => {
         if (child.name.includes(SCREEN_NODE) && (child as THREE.Mesh).isMesh) {
           screenMesh = child as THREE.Mesh;
-          console.log('[Gituar3D] Screen node found:', child.name);
+          console.log('[Gituar3D] Screen node found:', child.name, screenMesh);
           const mat = (Array.isArray(screenMesh.material) ? screenMesh.material[0] : screenMesh.material) as THREE.MeshStandardMaterial;
+          
+          // Dokuları uygula
           mat.map = textures[0]; 
           mat.emissiveMap = textures[0];
+          mat.color = new THREE.Color(0xffffff);
           mat.emissive = new THREE.Color(0xffffff); 
-          mat.emissiveIntensity = 0.5;
-          mat.metalness = 0;
-          mat.roughness = 1;
+          mat.emissiveIntensity = 0.6;
+          mat.metalness = 0.0;
+          mat.roughness = 1.0;
+          
+          mat.transparent = false;
+          mat.opacity = 1.0;
           mat.needsUpdate = true;
         }
       });
