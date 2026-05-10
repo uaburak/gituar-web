@@ -6,7 +6,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const TAU = Math.PI * 2;
 const KEYFRAMES = [
-  { position: { x: -0.03, y: -1.0, z: 0   }, rotation: { x: -1.0,  y: 0,              z: 0     }, scale: 1.4 },
+  { position: { x: -0.03, y: -1.4, z: 0   }, rotation: { x: -1.0,  y: 0,              z: 0     }, scale: 1.8 },
   { position: { x: -1.0, y: 0.1,  z: 0   }, rotation: { x: -0.04, y: TAU + 0.3,      z: -0.03 }, scale: 1.0 },
   { position: { x: 1.0,  y: -0.1, z: 0   }, rotation: { x: 0.04,  y: TAU * 2 - 0.25, z: 0.03  }, scale: 1.0 },
   { position: { x: 0,    y: -0.1, z: 0.5 }, rotation: { x: 0,     y: TAU * 3,         z: 0     }, scale: 1.0 },
@@ -27,8 +27,8 @@ export default function IPhoneScene() {
     renderer.setClearColor(0x000000, 0);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
+    renderer.toneMapping = THREE.NoToneMapping; // ACESFilmic beyazları grileştiriyordu, kapattık
+    renderer.toneMappingExposure = 1.0; 
     mount.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
@@ -45,9 +45,11 @@ export default function IPhoneScene() {
       const t = texLoader.load(src);
       t.flipY = false;
       t.colorSpace = THREE.SRGBColorSpace;
-      // Sündürmeyi engellemek için repeat ve offset ayarı (Modelin UV'lerine göre ince ayar)
-      t.repeat.set(1, 1.0); // Önce bir sıfırlayalım
-      t.offset.set(0, 0);
+      // Sündürmeyi engellemek için mükemmel oran (SX: 2.17, SY: 1.0, TX: -0.04)
+      t.repeat.set(2.17, 1.0); 
+      t.offset.set(-0.04, 0);
+      t.wrapS = THREE.ClampToEdgeWrapping;
+      t.wrapT = THREE.ClampToEdgeWrapping;
       t.minFilter = THREE.LinearFilter;
       t.magFilter = THREE.LinearFilter;
       return t;
@@ -77,8 +79,8 @@ export default function IPhoneScene() {
       mat.map = textures[idx];
       mat.emissiveMap = textures[idx];
       mat.color.setHex(0xffffff); 
-      mat.emissive.setHex(0xffffff);
-      mat.emissiveIntensity = 0.5;
+      mat.emissive.setHex(0x000000); // Işımayı kapattık
+      mat.emissiveIntensity = 0;
       mat.needsUpdate = true;
     }
 
@@ -133,24 +135,30 @@ export default function IPhoneScene() {
       phone.rotation.set(KEYFRAMES[0].rotation.x, KEYFRAMES[0].rotation.y, KEYFRAMES[0].rotation.z);
 
       phone.traverse((child) => {
+        // Debug: Modeldeki tüm mesh isimlerini görelim
+        if ((child as THREE.Mesh).isMesh) {
+          console.log('[Gituar3D] Mesh found:', child.name);
+        }
+
         if (child.name.includes(SCREEN_NODE) && (child as THREE.Mesh).isMesh) {
           screenMesh = child as THREE.Mesh;
-          console.log('[Gituar3D] Screen node found:', child.name, screenMesh);
+          console.log('[Gituar3D] Target screen mesh found:', child.name);
           const mat = (Array.isArray(screenMesh.material) ? screenMesh.material[0] : screenMesh.material) as THREE.MeshStandardMaterial;
           
           // Dokuları uygula
           mat.map = textures[0]; 
           mat.emissiveMap = textures[0];
           mat.color = new THREE.Color(0xffffff);
-          mat.emissive = new THREE.Color(0xffffff); 
-          mat.emissiveIntensity = 0.6;
+          mat.emissive = new THREE.Color(0x000000); // Işımayı kapattık
+          mat.emissiveIntensity = 0;
           mat.metalness = 0.0;
           mat.roughness = 1.0;
           
-          // Sadece ön yüzeyi kapla ve sündürmeyi engelle
+          // Sadece ön yüzey ve sündürme engelleyici ayarlar
           mat.side = THREE.FrontSide;
           mat.transparent = false;
           mat.opacity = 1.0;
+          
           mat.needsUpdate = true;
         }
       });
