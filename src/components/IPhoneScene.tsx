@@ -46,8 +46,8 @@ export default function IPhoneScene() {
       t.flipY = false;
       t.colorSpace = THREE.SRGBColorSpace;
       // Sündürmeyi engellemek için repeat ve offset ayarı (Modelin UV'lerine göre ince ayar)
-      t.repeat.set(1, 0.92); 
-      t.offset.set(0, 0.04);
+      t.repeat.set(1, 1.0); // Önce bir sıfırlayalım
+      t.offset.set(0, 0);
       t.minFilter = THREE.LinearFilter;
       t.magFilter = THREE.LinearFilter;
       return t;
@@ -147,6 +147,8 @@ export default function IPhoneScene() {
           mat.metalness = 0.0;
           mat.roughness = 1.0;
           
+          // Sadece ön yüzeyi kapla ve sündürmeyi engelle
+          mat.side = THREE.FrontSide;
           mat.transparent = false;
           mat.opacity = 1.0;
           mat.needsUpdate = true;
