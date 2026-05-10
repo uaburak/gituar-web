@@ -13,7 +13,7 @@ export default function HeroSection() {
           Sahneni Genişlet
         </h1>
 
-        <p className="mt-4 text-[16px] leading-[24px] font-normal text-zinc-500 max-w-[540px] text-balance">
+        <p className="mt-4 text-[16px] leading-[24px] font-normal max-w-[600px]">
           Gituar ile akorlarını düzenle, dijital repertuarını oluştur ve Popüler şarkıları saniyeler içinde keşfet. Müzik yolculuğunda ihtiyacın olan her şey tek bir platformda.
         </p>
 
