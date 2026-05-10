@@ -11,6 +11,8 @@ export default function Navigation() {
               src="/gituar-logo.png"
               alt="Gituar Logo"
               fill
+              sizes="36px"
+              priority
               className="object-cover scale-[1.3]"
             />
           </div>
