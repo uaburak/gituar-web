@@ -2,10 +2,18 @@ export default function CTASection() {
   return (
     <section
       id="section-cta"
-      className="relative min-h-screen flex items-center justify-center"
-      style={{ zIndex: 1 }}
+      className="relative h-[100vh] w-full flex flex-col items-center justify-end pb-[10vh]"
+      style={{ zIndex: 20 }}
     >
-      <div className="w-full max-w-[800px] mx-auto px-6 py-24 flex flex-col items-center text-center">
+      {/* Sisi yaratan maske katmanı */}
+      <div 
+        className="absolute inset-0 pointer-events-none" 
+        style={{
+          background: 'linear-gradient(to bottom, transparent 0%, transparent 30%, white 55%, white 100%)'
+        }}
+      />
+
+      <div className="relative z-10 w-full max-w-[800px] px-6 flex flex-col items-center text-center">
         <h2 className="text-[42px] leading-[1.1] font-medium tracking-[-0.03em] text-black mb-6 max-w-[800px] text-balance">
           Müziğini
           <br />

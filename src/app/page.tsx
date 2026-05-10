@@ -13,7 +13,7 @@ export default function Home() {
       <IPhoneSceneLoader />
 
       {/* Scroll container — içerik katmanı */}
-      <div className="relative" style={{ zIndex: 1 }}>
+      <div className="relative">
         <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center px-6 py-4 bg-white border-b border-zinc-100">
           <div className="flex items-center justify-between max-w-[800px] w-full">
             <div className="flex gap-3 items-center">
@@ -42,7 +42,7 @@ export default function Home() {
         </header>
 
         {/* Sections */}
-        <main className="pt-[60px]">
+        <main>
           <HeroSection />
           <FeaturesSection />
           <CommunitySection />

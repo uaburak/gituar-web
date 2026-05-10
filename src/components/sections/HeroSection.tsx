@@ -2,11 +2,11 @@ export default function HeroSection() {
   return (
     <section
       id="section-hero"
-      className="relative min-h-screen flex flex-col"
+      className="relative h-[100vh] w-full flex flex-col items-center justify-start pt-[160px]"
       style={{ zIndex: 1 }}
     >
-      {/* Metin — üst orta, pt-[120px] header'ın altında başlasın */}
-      <div className="flex flex-col items-center text-center pt-[60px] px-6 pb-12">
+      {/* Metin — üst orta */}
+      <div className="flex flex-col items-center text-center px-6">
         <h1 className="text-[42px] leading-[1.1] font-medium tracking-[-0.03em] text-black max-w-[600px] text-balance">
           Müziğini
           <br />
@@ -18,17 +18,15 @@ export default function HeroSection() {
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
-          <a
-            href="#download"
-            className="bg-[#0088FF] hover:bg-[#0077EE] transition-all duration-200 flex h-[40px] items-center justify-center px-6 rounded-full shadow-sm"
-          >
-            <span className="text-[13px] font-medium text-white">Uygulamayı indir</span>
+          <a href="#download" tabIndex={0}>
+            <img 
+              className="bn46 h-[44px] w-auto" 
+              src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
+              alt="Download on the App Store" 
+            />
           </a>
         </div>
       </div>
-
-      {/* Boşluk — Three.js telefon bu alanda görünecek */}
-      <div className="flex-1" style={{ minHeight: '55vh' }} />
     </section>
   );
 }

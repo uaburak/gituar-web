@@ -3,13 +3,17 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const TAU = Math.PI * 2;
 const KEYFRAMES = [
   { position: { x: -0.03, y: -1.4, z: 0   }, rotation: { x: -1.0,  y: 0,              z: 0     }, scale: 1.8 },
-  { position: { x: -1.0, y: 0.1,  z: 0   }, rotation: { x: -0.04, y: TAU + 0.3,      z: -0.03 }, scale: 1.0 },
-  { position: { x: 1.0,  y: -0.1, z: 0   }, rotation: { x: 0.04,  y: TAU * 2 - 0.25, z: 0.03  }, scale: 1.0 },
-  { position: { x: 0,    y: -0.1, z: 0.5 }, rotation: { x: 0,     y: TAU * 3,         z: 0     }, scale: 1.0 },
+  { position: { x: -1.0, y: 0.0,  z: 0   }, rotation: { x: 0.0, y: TAU + 0.7,      z: 0.00 }, scale: 1.0 },
+  { position: { x: 1.0,  y: -0.0, z: 0   }, rotation: { x: 0.0,  y: TAU * 2 - 0.0, z: 0.00  }, scale: 1.0 },
+  { position: { x: 0,    y: 0.0, z: 0.5 }, rotation: { x: 0,     y: TAU * 3,         z: 0     }, scale: 1.0 },
 ];
 const SCREEN_TEXTURES = ['/hero-image.png', '/chord_search_ui.png', '/repertoire_list_ui.png', '/hero-image.png'];
 const SCREEN_NODE = 'ScreenMaterial1';
@@ -55,19 +59,10 @@ export default function IPhoneScene() {
       return t;
     });
 
-    // Scroll state — native, no GSAP dependency
-    let rawProgress = 0;
-    let smoothProgress = 0;
-    const onScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      rawProgress = max > 0 ? window.scrollY / max : 0;
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-
     let phone: THREE.Object3D | null = null;
     let ox = 0, oy = 0, oz = 0;
     let screenMesh: THREE.Mesh | null = null;
-    let currentTexIdx = -1; // -1 yapıyoruz ki ilk 0 indeksi uygulansın
+    let currentTexIdx = -1;
 
     function applyTexture(idx: number) {
       if (!screenMesh || idx === currentTexIdx) return;
@@ -79,7 +74,7 @@ export default function IPhoneScene() {
       mat.map = textures[idx];
       mat.emissiveMap = textures[idx];
       mat.color.setHex(0xffffff); 
-      mat.emissive.setHex(0x000000); // Işımayı kapattık
+      mat.emissive.setHex(0x000000);
       mat.emissiveIntensity = 0;
       mat.needsUpdate = true;
     }
@@ -87,35 +82,11 @@ export default function IPhoneScene() {
     let rafId = 0;
     function animate() {
       rafId = requestAnimationFrame(animate);
-
-      // Smooth lerp
-      smoothProgress += (rawProgress - smoothProgress) * 0.055;
-
-      if (phone) {
-        const N = KEYFRAMES.length - 1;
-        const seg = smoothProgress * N;
-        const i = Math.min(Math.floor(seg), N - 1);
-        const p = Math.min(seg - i, 1);
-        const from = KEYFRAMES[i];
-        const to = KEYFRAMES[i + 1] ?? KEYFRAMES[i];
-
-        phone.position.x = ox + lerp(from.position.x, to.position.x, p);
-        phone.position.y = oy + lerp(from.position.y, to.position.y, p);
-        phone.position.z = oz + lerp(from.position.z, to.position.z, p);
-        phone.rotation.x = lerp(from.rotation.x, to.rotation.x, p);
-        phone.rotation.y = lerp(from.rotation.y, to.rotation.y, p);
-        phone.rotation.z = lerp(from.rotation.z, to.rotation.z, p);
-
-        // Scale lerp
-        const targetScale = (2.4 / (phone as any)._baseHeight) * lerp(from.scale, to.scale, p);
-        phone.scale.setScalar(targetScale);
-        
-        applyTexture(Math.min(Math.round(smoothProgress * N), N));
-      }
-
       renderer.render(scene, camera);
     }
     animate();
+
+    // GSAP ScrollTrigger logic will be initialized after model loads
 
     new GLTFLoader().load('/iphone.glb', (gltf) => {
       phone = gltf.scene;
@@ -164,6 +135,81 @@ export default function IPhoneScene() {
       });
 
       scene.add(phone);
+
+      // We will use a proxy object to hold the global 'progress' (0 to 3)
+      const proxy = { p: 0 };
+      
+      const onUpdateProxy = () => {
+        const N = KEYFRAMES.length - 1; // 3
+        // Clamping to avoid out of bounds
+        const seg = Math.max(0, Math.min(proxy.p, N)); 
+        const i = Math.min(Math.floor(seg), N - 1);
+        const p = seg - i;
+        const from = KEYFRAMES[i];
+        const to = KEYFRAMES[i + 1];
+
+        // Apply interpolations
+        phone!.position.x = ox + lerp(from.position.x, to.position.x, p);
+        phone!.position.y = oy + lerp(from.position.y, to.position.y, p);
+        phone!.position.z = oz + lerp(from.position.z, to.position.z, p);
+        phone!.rotation.x = lerp(from.rotation.x, to.rotation.x, p);
+        phone!.rotation.y = lerp(from.rotation.y, to.rotation.y, p);
+        phone!.rotation.z = lerp(from.rotation.z, to.rotation.z, p);
+
+        const targetScale = (2.4 / (phone as any)._baseHeight) * lerp(from.scale, to.scale, p);
+        phone!.scale.setScalar(targetScale);
+        
+        // Apply texture
+        applyTexture(Math.round(seg));
+      };
+
+      // 1. Hero to Features (Fast transition)
+      ScrollTrigger.create({
+        trigger: '#section-features',
+        start: 'top bottom',
+        end: 'top top',
+        scrub: true,
+        animation: gsap.fromTo(proxy, { p: 0 }, { p: 1, ease: 'none', onUpdate: onUpdateProxy })
+      });
+
+      // 2. Inside Features (Slow motion drift during pin)
+      ScrollTrigger.create({
+        trigger: '#section-features',
+        start: 'top top',
+        end: '+=300%',
+        scrub: true,
+        animation: gsap.fromTo(proxy, { p: 1 }, { p: 1.05, ease: 'none', onUpdate: onUpdateProxy })
+      });
+
+      // 3. Features to Community (Fast transition)
+      ScrollTrigger.create({
+        trigger: '#section-community',
+        start: 'top bottom',
+        end: 'top top',
+        scrub: true,
+        animation: gsap.fromTo(proxy, { p: 1.05 }, { p: 2, ease: 'none', onUpdate: onUpdateProxy })
+      });
+
+      // 4. Inside Community (Slow motion drift during pin)
+      ScrollTrigger.create({
+        trigger: '#section-community',
+        start: 'top top',
+        end: '+=300%',
+        scrub: true,
+        animation: gsap.fromTo(proxy, { p: 2 }, { p: 2.05, ease: 'none', onUpdate: onUpdateProxy })
+      });
+
+      // 5. Community to CTA (Fast transition)
+      ScrollTrigger.create({
+        trigger: '#section-cta',
+        start: 'top bottom',
+        end: 'top top',
+        scrub: true,
+        animation: gsap.fromTo(proxy, { p: 2.05 }, { p: 3, ease: 'none', onUpdate: onUpdateProxy })
+      });
+      
+      // Initialize to state 0
+      applyTexture(0);
     });
 
     const onResize = () => {
@@ -175,7 +221,6 @@ export default function IPhoneScene() {
 
     return () => {
       cancelAnimationFrame(rafId);
-      window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
       renderer.dispose();
       if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
